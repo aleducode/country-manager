@@ -7,7 +7,7 @@ from country_manager.countries.models import Country, Currency
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
     """Country admin."""
-    search_fields = ['name']
+    search_fields = ['name', "phone_prefix"]
 
 
 @admin.register(Currency)

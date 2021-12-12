@@ -8,6 +8,8 @@ from country_manager.countries.api.serializers import (
     SerializerRestrictedCountry,
     BaseSerializerCountry
 )
+# Filters
+from rest_framework.filters import SearchFilter
 
 
 class CountryViewSet(mixins.RetrieveModelMixin,
@@ -17,6 +19,8 @@ class CountryViewSet(mixins.RetrieveModelMixin,
     permission_classes = [IsAuthenticated]
     queryset = Country.objects.all()
     serializer_class = SerializerCountry
+    filter_backends = (SearchFilter,)
+    search_fields = ['=phone_prefix']
 
     def get_permissions(self):
         if self.action == 'list':
@@ -30,11 +34,4 @@ class CountryViewSet(mixins.RetrieveModelMixin,
             return SerializerCountry
         else:
             return SerializerRestrictedCountry
-
-
-class GonorreaViewSet(mixins.ListModelMixin,
-                     viewsets.GenericViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = Country.objects.all()
-    serializer_class = BaseSerializerCountry
 
